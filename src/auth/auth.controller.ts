@@ -15,6 +15,7 @@ export class AuthController {
 
     @Post('/registration')
     async registration(@Body() userDto: CreateUserDto) {
+        console.log(process.env.JWT_KEY)
         return this.authService.registration(userDto)
     }
 

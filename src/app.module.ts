@@ -11,6 +11,7 @@ import { UserRoles } from './roles/user-roles.model';
 import { AuthController } from './auth/auth.controller';
 import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
+import { JwtModule, JwtService } from '@nestjs/jwt';
 
 
 @Module({
@@ -32,7 +33,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     RolesModule,
-    AuthModule
+    AuthModule,
+    JwtModule
   ],
   controllers: [AuthController],
   providers: [AuthService]
