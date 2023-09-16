@@ -3,7 +3,6 @@ import { JwtService } from '@nestjs/jwt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from 'src/users/users.service';
 import * as bcrypt from 'bcrypt';
-import e from 'express';
 
 
 @Injectable()
@@ -35,19 +34,27 @@ export class AuthService {
     }
 
     private async generateToken(user) {
-        const payload = {email: user.email, password: user.password, roles: user.roles}
+        try {
+            const payload = {email: user.email, password: user.password, id: user.id, roles: user.roles}
         return {
             token: await this.jwtService.sign(payload, { secret: process.env.JWT_KEY })
         }
+        } catch (error) {
+            throw error;
+        }
+
     }
 
     private async validateUser(userDto : CreateUserDto) {
-
-        const user = await this.userService.getUserByEmail(userDto.email);
+        try {
+            const user = await this.userService.getUserByEmail(userDto.email);
         const checkPassword = await bcrypt.compare(userDto.password, user.password)
         if (user && checkPassword) {
             return user;
         }
         throw new UnauthorizedException({message: "Неверный электронный адрес или пароль"})
+        } catch (error) {
+            throw error;
+        }
     }
 }

@@ -23,7 +23,7 @@ export class User extends Model<User, UserCreationAttrs> {
     password: string;
 
     @ApiProperty({example: 'False', description: 'В бане ли пользователь'})
-    @Column({type: DataType.STRING, defaultValue: false})
+    @Column({type: DataType.BOOLEAN, defaultValue: false})
     banned: boolean;
 
     @ApiProperty({example: 'Нарушение правил', description: 'Причина бана'})
